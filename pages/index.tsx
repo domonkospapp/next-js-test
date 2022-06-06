@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import useSWR from "swr";
 import {Character, GetCharacterResults} from "../types";
 import Image from "next/image";
+import imageLoader from "../imageLoader";
 
 const fetcher = (key: any) => fetch(key).then((res) => res.json());
 
@@ -36,6 +37,8 @@ const Home: NextPage<{characters: Character[]}> = ({characters}) => {
                   <div key={character.id}>
                       {character.name}
                       <Image
+                          loader={imageLoader}
+                          unoptimized
                           src={character.image}
                           alt={character.name}
                           width={200}
