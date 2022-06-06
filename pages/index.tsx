@@ -1,7 +1,8 @@
-import type { NextPage } from "next";
+import type {GetStaticProps, NextPage} from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import useSWR from "swr";
+import {Character, GetCharacterResults} from "../types";
 
 const fetcher = (key: any) => fetch(key).then((res) => res.json());
 
@@ -17,7 +18,7 @@ function Users() {
   );
 }
 
-const Home: NextPage = () => {
+const Home: NextPage<{characters: Character[]}> = ({characters}) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -29,9 +30,22 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <h1>User data from Serverless Cloud</h1>
         <Users />
+          {
+              characters.map(character=> <li key={character.id}>{character.name}</li>)
+          }
       </main>
     </div>
   );
 };
+
+export const getStaticProps: GetStaticProps = async() => {
+    const res = await fetch("https://rickandmortyapi.com/api/character")
+    const { results }: GetCharacterResults = await res.json()
+    return {
+        props:{
+            characters: results
+        }
+    }
+}
 
 export default Home;
