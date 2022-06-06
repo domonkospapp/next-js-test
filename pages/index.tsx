@@ -3,6 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import useSWR from "swr";
 import {Character, GetCharacterResults} from "../types";
+import Image from "next/image";
 
 const fetcher = (key: any) => fetch(key).then((res) => res.json());
 
@@ -31,7 +32,17 @@ const Home: NextPage<{characters: Character[]}> = ({characters}) => {
         <h1>User data from Serverless Cloud</h1>
         <Users />
           {
-              characters.map(character=> <li key={character.id}>{character.name}</li>)
+              characters.map(character=>
+                  <div key={character.id}>
+                      {character.name}
+                      <Image
+                          src={character.image}
+                          alt={character.name}
+                          width={200}
+                          height={200}
+                      />
+                  </div>
+              )
           }
       </main>
     </div>
