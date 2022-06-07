@@ -5,6 +5,7 @@ import useSWR from "swr";
 import {Character, GetCharacterResults} from "../types";
 import Image from "next/image";
 import imageLoader from "../imageLoader";
+import Link from "next/link";
 
 const fetcher = (key: any) => fetch(key).then((res) => res.json());
 
@@ -35,7 +36,11 @@ const Home: NextPage<{characters: Character[]}> = ({characters}) => {
           {
               characters.map(character=>
                   <div key={character.id}>
-                      {character.name}
+                      <Link href={`characters/${character.id}`}>
+                          <a>
+                              <h3>{character.name}</h3>
+                          </a>
+                      </Link>
                       <Image
                           loader={imageLoader}
                           unoptimized
