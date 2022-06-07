@@ -4,10 +4,11 @@ import imageLoader from "../../imageLoader";
 import {GetServerSideProps} from "next";
 import {useRouter} from "next/router";
 import Layout from "../../components/Layout";
+import styles from "../../styles/Character.module.css"
 
 const CharacterPage = ({character}:{character: Character}) => {
     const router = useRouter()
-    return <div>
+    return <div className={styles.container}>
         <h1>{router.query.id}. {character.name}</h1>
         <Image
             loader={imageLoader}
