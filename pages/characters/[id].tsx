@@ -3,6 +3,7 @@ import Image from "next/image";
 import imageLoader from "../../imageLoader";
 import {GetServerSideProps} from "next";
 import {useRouter} from "next/router";
+import Layout from "../../components/Layout";
 
 const CharacterPage = ({character}:{character: Character}) => {
     const router = useRouter()
@@ -18,6 +19,8 @@ const CharacterPage = ({character}:{character: Character}) => {
         />
     </div>
 }
+
+CharacterPage.layout = (page: typeof CharacterPage) => <Layout>{page}</Layout>
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const res = await fetch(`https://rickandmortyapi.com/api/character/${context.query.id}`)
